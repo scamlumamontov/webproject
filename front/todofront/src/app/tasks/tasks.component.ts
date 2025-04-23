@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   selector: 'app-tasks',
   imports: [NgFor, NgIf, TaskComponent],
   template:`
-    <h2 *ngIf="checklocal()">You need to log in first!</h2>
+    <h2 class="tasks", *ngIf="checklocal()">You need to log in first!</h2>
     <div *ngFor="let k of tasklist; index as id">
       <app-task [task]="k" [id]="id"></app-task>
     </div>
