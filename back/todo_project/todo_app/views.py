@@ -54,25 +54,3 @@ class FileListView(APIView):
         files = FileUpload.objects.filter(user=request.user)
         serializer = FileUploadSerializer(files, many=True)
         return Response(serializer.data)
-    
-class CustomAuthToken(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
-        response = super().post(request, *args, **kwargs)
-        token = response.data.get('token')
-        user_id = response.data.get('user_id')
-        email = response.data.get('email')
-        return Response({
-            'token': token,
-            'user_id': user_id,
-            'email': email
-        })
-
-class LogoutView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        try:
-            request.user.auth_token.delete()
-            return Response({"message": "Successfully logged out."}, status=status.HTTP_200_OK)
-        except (AttributeError, Token.DoesNotExist):
-            return Response({"message": "No token found."}, status=status.HTTP_400_BAD_REQUEST)
