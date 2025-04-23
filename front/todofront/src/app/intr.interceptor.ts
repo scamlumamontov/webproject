@@ -13,48 +13,49 @@ export const intrInterceptor: HttpInterceptorFn = (req, next) => {
   const http = inject(HttpClient);
   const router = inject(Router);
 
-  if (access) {
-    const authReq = req.clone({
+    if(access) {
+      const authReq = req.clone({
       setHeaders: {
         Authorization: `Bearer ${access}`
       }
     });
 
+    console.log('Access:', access);
+    console.log('Refresh:', refresh);
+    
     return next(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
+        console.error('Ошибка основного запроса:', error);
+    
         if (error.status === 401 && refresh && !refreshAttempted) {
+          
           refreshAttempted = true;
-
-          return http.post<any>('http://localhost:8000/api/auth/refresh', { refresh }).pipe(
+    
+          return http.post<any>('http://localhost:8000/api/auth/refresh/', { refresh }, {
+            headers: { 'Content-Type': 'application/json' }
+          }).pipe(
             switchMap((data) => {
+              refreshAttempted = false;
               localStorage.setItem('access', data.access);
-              localStorage.setItem('refresh', data.refresh);
-
+              
               const retryReq = req.clone({
                 setHeaders: {
                   Authorization: `Bearer ${data.access}`
                 }
               });
-
+              
               return next(retryReq);
             }),
             catchError(err => {
-              setTimeout(() => {
-                localStorage.removeItem('access');
-                localStorage.removeItem('refresh');
-                window.location.href = '/login';
-              });
+              refreshAttempted = false;
+              localStorage.removeItem('access');
+              localStorage.removeItem('refresh');
+              window.location.href = '/login';
               return throwError(() => err);
             })
           );
         }
-
-        if (error.status === 401) {
-            localStorage.removeItem('access');
-            localStorage.removeItem('refresh');
-            window.location.href = '/login';
-        }
-
+    
         return throwError(() => error);
       })
     );

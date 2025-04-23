@@ -9,9 +9,9 @@ import { Observable } from 'rxjs';
   selector: 'app-tasks',
   imports: [NgFor, NgIf, TaskComponent],
   template:`
-    <h2 class="tasks", *ngIf="checklocal()">You need to log in first!</h2>
-    <div *ngFor="let k of tasklist; index as id">
-      <app-task [task]="k" [id]="id"></app-task>
+    <h2 *ngIf="checklocal()">You need to log in first!</h2>
+    <div class="tasks">
+      <app-task *ngFor="let k of tasklist; index as id" [task]="k" [id]="id"></app-task>
     </div>
   `,
   styleUrl: './tasks.component.css'
@@ -26,6 +26,7 @@ export class TasksComponent {
 
   checklocal():boolean{
     let buf = localStorage.getItem('refresh')
+    if(!buf) buf = "";
     if(buf == "") return true;
     return false;
   }

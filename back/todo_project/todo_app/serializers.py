@@ -24,7 +24,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
 class FileUploadSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    file = serializers.FileField()
+    file = serializers.CharField()
     uploaded_at = serializers.DateTimeField(read_only=True)
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=False)  # Removed `read_only=True`
 

@@ -20,3 +20,10 @@ export interface TaskInt {
     "category": number,
     "priority": number,
 }
+
+export interface JwtPayload {
+    "user_id": number,
+    "username": string,
+    "exp": number,
+    "iat": number,
+  }

@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import datetime
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +44,18 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'todo_app',  
 ]
+
+"""
+#Interceptor works great ! :D
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=5),
+
+    'REFRESH_TOKEN_LIFETIME': timedelta(seconds=10),
+
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+"""
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

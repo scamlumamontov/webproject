@@ -18,6 +18,6 @@ class Task(models.Model):
     completed = models.BooleanField(default=False)
 
 class FileUpload(models.Model):
-    file = models.FileField(upload_to='uploads/')
+    file = models.CharField(max_length=200)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

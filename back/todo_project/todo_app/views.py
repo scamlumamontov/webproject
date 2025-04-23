@@ -36,7 +36,7 @@ class TaskDetailView(APIView):
         task = Task.objects.get(pk=pk)
         serializer = TaskSerializer(task)
         return Response(serializer.data)
-    
+
 class FileUploadView(APIView):
     permission_classes = [IsAuthenticated]
 

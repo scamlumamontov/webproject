@@ -7,9 +7,12 @@ import { Router } from '@angular/router';
   selector: 'app-root',
   imports: [RouterOutlet],
   template:`
-    <h1>Good old works!</h1>
+    <h1>To-do list!</h1>
     <button (click)="logout()">Logout</button>
     <button (click)="login()">Login</button>
+    <button (click)="create()">Create task!</button>
+    <button (click)="tasks()">See tasks!</button>
+    <button (click)="byid()">Search by id!</button>
     <div></div>
     <router-outlet></router-outlet>
   `,
@@ -22,13 +25,23 @@ export class AppComponent {
     
   }
 
+  byid(){
+    this.router.navigate(['/taskbyid']);
+  }
+  tasks(){
+    this.router.navigate(['/tasks']);
+  }
   login():void{
-    window.location.href = '/login';
+    this.router.navigate(['/login']);
   }
 
   logout():void{
     localStorage.setItem('access', "");
     localStorage.setItem('refresh', "");
     this.router.navigate(['/login']);
+  }
+
+  create():void{
+    this.router.navigate(['/createtask']);
   }
 }
