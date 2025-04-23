@@ -8,6 +8,7 @@ from .serializers import TaskSerializer, FileUploadSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def task_list(request):
