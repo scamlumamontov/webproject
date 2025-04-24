@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
     <button (click)="create()">Create task!</button>
     <button (click)="tasks()">See tasks!</button>
     <button (click)="byid()">Search by id!</button>
+    <button (click)="myposts()">My tasks!</button>
     <div></div>
     <router-outlet></router-outlet>
   `,
@@ -25,6 +26,9 @@ export class AppComponent {
     
   }
 
+  myposts(){
+    this.router.navigate(['/myposts']);
+  }
   byid(){
     this.router.navigate(['/taskbyid']);
   }

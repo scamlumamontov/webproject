@@ -34,9 +34,24 @@ export class SerService {
     return this.http.get<TaskInt[]>(this.taskUrl);
   }
 
+  getmyTasks(): Observable<TaskInt[]> {
+    let cur = localStorage.getItem('refresh');
+    if(!cur) return new Observable<TaskInt[]>;
+    let myurl = this.taskUrl + this.getUserId() + "/user/";
+    return this.http.get<TaskInt[]>(myurl);
+  }
+
   getTask(id: number): Observable<TaskInt> {
     console.log(this.taskUrl + id + "/");
     return this.http.get<TaskInt>(this.taskUrl + id + "/");
+  }
+
+  deleteTask(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.taskUrl}${id}/`);
+  }
+
+  updateTask(task: TaskInt): Observable<TaskInt> {
+    return this.http.put<TaskInt>(`${this.taskUrl}${task.id}/`, task);
   }
   
   private loginUrl:string = "http://localhost:8000/api/auth/login/";
@@ -46,6 +61,6 @@ export class SerService {
 
   private postUrl:string = "http://localhost:8000/api/tasks/create/";
   createtask(cur: TaskInt) {
-    return this.http.post<TaskInt>(this.postUrl, cur); // возвращаем observable
+    return this.http.post<TaskInt>(this.postUrl, cur);
   }
 }

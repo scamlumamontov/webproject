@@ -11,5 +11,6 @@ urlpatterns = [
     path('tasks/<int:pk>/', views.TaskDetailView.as_view()),
     path('auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/refresh/', TokenRefreshView.as_view()),
+    path('tasks/<int:pk>/user/', views.get_user),
     #path('auth/getuserid', );
 ]

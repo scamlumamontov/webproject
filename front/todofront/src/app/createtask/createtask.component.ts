@@ -37,7 +37,7 @@ import { TaskInt } from '../interfaces';
 export class CreatetaskComponent {
   cur: TaskInt = {} as TaskInt;
 
-  constructor(private ser: SerService){
+  constructor(private ser: SerService, private router: Router){
 
   }
 
@@ -47,12 +47,13 @@ export class CreatetaskComponent {
   
     this.ser.createtask(this.cur).subscribe({
       next: (res) => {
-        console.log('Успешно отправлено:', res);
+        console.log('good', res);
       },
       error: (err) => {
-        console.error('Ошибка при отправке:', err);
+        console.error('err', err);
       }
     });
+    this.router.navigate(['/tasks']);
   }
 
 
